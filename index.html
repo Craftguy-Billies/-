@@ -225,7 +225,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/">首頁 <span class="sr-only">(目前位置)</span></a>
+                    <a class="nav-link" href="/" aria-current="page">首頁</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#section-human-condition">人的處境</a>
@@ -235,6 +235,12 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#section-value-vacuum">價值真空</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section-existential-dilemma">存在的兩難</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section-courage">前進的勇氣</a>
                 </li>
             </ul>
         </div>
@@ -337,7 +343,7 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3 footer" role="contentinfo">
-    <p class="mb-0" style="text-indent:0;">&copy; 2024 billiez<sup>TM</sup>. All rights reserved.</p>
+    <p class="mb-0" style="text-indent:0;">&copy; <span id="footer-year">2024</span> billiez<sup>TM</sup>. All rights reserved.</p>
 </footer>
 
 <!-- Scroll-to-top Button -->
@@ -367,7 +373,14 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
     /* --------------------------------------------------------
      * 1. DIAGNOSTIC LOGGING (always-on debug)
      * -------------------------------------------------------- */
-    var DEBUG = true;
+    var DEBUG = (function() {
+        try {
+            return localStorage.getItem('debug') === 'true' ||
+                   window.location.search.indexOf('debug=true') !== -1;
+        } catch(_e) {
+            return false;
+        }
+    })();
     var LOG_PREFIX = '[人格規律]';
     var logDebug = function(msg, data) {
         if (!DEBUG) return;
