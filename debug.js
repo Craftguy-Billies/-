@@ -297,15 +297,17 @@
         }
         anchors.forEach(function(a) {
             a.addEventListener('click', function(e) {
-                var id = this.getAttribute('href');
-                if (id === '#') return;
-                var target = document.querySelector(id);
+                var raw = this.getAttribute('href');
+                if (raw === '#') return;
+                var id = raw.substring(1);
+                // Use getElementById to avoid CSS selector issues with special chars
+                var target = document.getElementById(id) || document.querySelector('a[name="' + id + '"]');
                 if (target) {
                     e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    info('Scrolled to: ' + id);
+                    info('Scrolled to: ' + raw);
                 } else {
-                    warn('Target not found: ' + id);
+                    warn('Target not found: ' + raw);
                 }
             });
         });
